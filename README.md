@@ -1,0 +1,1 @@
+# pluginSonar-powerapiCI
