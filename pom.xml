@@ -32,7 +32,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <pluginKey>powerapiCI</pluginKey>
-                    <pluginClass>com.mycompany.sonar.reference.ExamplePlugin</pluginClass>
+                    <pluginClass>PrincipalPlugin</pluginClass>
                 </configuration>
             </plugin>
         </plugins>
