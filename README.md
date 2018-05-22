@@ -1,1 +1,1 @@
-# pluginSonar-powerapiCI
+Plugin sonar to show energy stat for your maven test project 
