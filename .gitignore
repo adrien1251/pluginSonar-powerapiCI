@@ -2,6 +2,8 @@
 build/
 target/
 bin/
+node/
+node_modules/
 dependency-reduced-pom.xml
 .classpath
 .project
