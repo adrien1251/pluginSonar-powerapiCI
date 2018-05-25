@@ -8,19 +8,18 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
     }).then(function (arg) {
         divToInsert = options.el;
 
-        var titre = document.createElement('h1');
-        titre.textContent = "Stat global du projet sur le dernier commit " + options.component.key;
-        options.el.appendChild(titre);
-
-
         searchAllSomething("build_name").done(function (response) {
             var fields = [];
             var table_fields = response.hits.hits;
             table_fields.forEach(function (field) {
                 fields.push(field._source.build_name);
             });
-
-            options.el.appendChild(initSelectList(fields, LIST_COMMIT_NAME));
+            if(fields.length === 0){
+                divToInsert.textContent = "Aucune données n'est actuellement présente sur votre base...";
+            } else {
+                actual_select_list = initSelectList(fields, LIST_COMMIT_NAME);
+                dataFromField(fields[0]);
+            }
         });
     });
     return function () {
@@ -34,6 +33,7 @@ var proxy = 'https://cors-anywhere.herokuapp.com/';
 const ES_URL = "http://elasticsearch.app.projet-davidson.fr/powerapici_test/_search";
 const LIST_COMMIT_NAME = "build_name";
 const LIST_TEST_NAME = "test_name";
+var actual_select_list;
 /**
  * Do ajax call to get dataSearch
  * @param dataForSearch
@@ -110,11 +110,13 @@ var dataFromField = function (searchField) {
 
     esCall(data).done(function (response) {
         printPowerapiCIDate(response.hits.hits[0]._source);
-
     });
 };
 
 var printPowerapiCIDate = function (powerapiData) {
+    divToInsert.textContent = '';
+    divToInsert.appendChild(actual_select_list);
+
     var div = document.createElement("div");
 
     var headerDiv = document.createElement("div");
@@ -142,18 +144,35 @@ var printPowerapiCIDate = function (powerapiData) {
         nom_test.textContent = test.name;
         testDiv.appendChild(nom_test);
 
-        var detail_div = document.createElement("h3");
-        detail_div.textContent = "Details du test";
+        var detail_div = document.createElement("img");
+        detail_div.setAttribute('src','https://cdn4.iconfinder.com/data/icons/miu/24/circle-add-plus-new-outline-stroke-256.png');
+        detail_div.setAttribute('onclick', 'changeVisibility(this)');
         testDiv.appendChild(detail_div);
 
+        var data_test_div = document.createElement("div");
+        data_test_div.style.visibility = "hidden";
+
         var data_test = document.createElement("p");
-        data_test.textContent = "Sur " + test.iterations.length + " itérations, le test à consommé " + test.energy + " Joules et à durée en moyenne " +
+        data_test.textContent = "Sur " + test.iterations.length + " itérations, le test en moyenne, à consommé " + test.energy + " Joules et à durée " +
             "" + test.duration + "ms";
-        testDiv.appendChild(data_test);
+        data_test_div.appendChild(data_test);
+
+        testDiv.appendChild(data_test_div);
 
         testsDiv.appendChild(document.createElement("hr"));
         testsDiv.appendChild(testDiv);
     });
 
+
     divToInsert.appendChild(testsDiv);
+};
+
+var changeVisibility = function(image_put){
+    var div = image_put.nextSibling;
+
+    if(div.style.visibility === "hidden"){
+        div.style.visibility = 'visible';
+    } else {
+        div.style.visibility = 'hidden';
+    }
 };
