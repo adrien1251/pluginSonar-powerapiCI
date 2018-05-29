@@ -31,8 +31,8 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
 var divToInsert;
 var proxy = 'https://cors-anywhere.herokuapp.com/';
 const ES_URL = "http://elasticsearch.app.projet-davidson.fr/powerapici_test/_search";
+const URL_CHARTJS = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js";
 const LIST_COMMIT_NAME = "build_name";
-const LIST_TEST_NAME = "test_name";
 var actual_select_list;
 /**
  * Do ajax call to get dataSearch
@@ -131,45 +131,57 @@ var printPowerapiCIData = function (powerapiData) {
     divToInsert.appendChild(div);
 
     var testsDiv = document.createElement("div");
-    var titletest = document.createElement("h1")
+    var titletest = document.createElement("h1");
     titletest.innerHTML = "Détails des tests : ";
     testsDiv.appendChild(titletest);
+
+    var labels = [];
+    var data = [];
     var cpt = 1;
     powerapiData.methods.forEach(function (test) {
-        var testDiv = document.createElement("div");
-        testDiv.setAttribute('class', 'test_div');
-
-        var nom_test = document.createElement("h2");
-        nom_test.textContent = test.name;
-        testDiv.appendChild(nom_test);
-
-        var data_test_div = document.createElement("div");
-        data_test_div.setAttribute('id', 'details' + cpt);
-        data_test_div.style.visibility = "hidden";
-
-        var button = document.createElement("button");
-        button.type='button';
-        button.setAttribute('class', 'btn btn-secondary');
-        button.setAttribute('onclick','changeVisibility(details'+cpt+')');
-        button.textContent='Afficher les détails du test';
-        testDiv.appendChild(button)
-
-
-        var data_test = document.createElement("p");
-        data_test.textContent = "Sur " + test.iterations.length + " itérations, le test à consommé " + test.energy + " Joules et a duré en moyenne " +
-            "" + test.duration + "ms";
-        data_test_div.appendChild(data_test);
-
-        testDiv.appendChild(data_test_div);
-
         testsDiv.appendChild(document.createElement("hr"));
-        testsDiv.appendChild(testDiv);
-        cpt++;
+        testsDiv.appendChild(createTestDiv(test, cpt++));
+
+        labels.push(test.name);
+        data.push(test.energy);
     });
 
-
     divToInsert.appendChild(testsDiv);
+
+    var canvas = document.createElement("canvas");
+    loadChartJS(canvas, "line", create_data_for_graph(labels, data));
+    divToInsert.appendChild(canvas);
 };
+
+var createTestDiv = function(test, cpt){
+    var testDiv = document.createElement("div");
+    testDiv.setAttribute('class', 'test_div');
+
+    var nom_test = document.createElement("h2");
+    nom_test.textContent = test.name;
+    testDiv.appendChild(nom_test);
+
+    var data_test_div = document.createElement("div");
+    data_test_div.setAttribute('id', 'details' + cpt);
+    data_test_div.style.visibility = "hidden";
+
+    var button = document.createElement("button");
+    button.type='button';
+    button.setAttribute('class', 'btn btn-secondary');
+    button.setAttribute('onclick','changeVisibility(details'+cpt+')');
+    button.textContent='Afficher les détails du test';
+    testDiv.appendChild(button);
+
+
+    var data_test = document.createElement("p");
+    data_test.textContent = "Sur " + test.iterations.length + " itérations, le test à consommé " + test.energy + " Joules et a duré en moyenne " +
+        "" + test.duration + "ms";
+    data_test_div.appendChild(data_test);
+
+    testDiv.appendChild(data_test_div);
+
+    return testDiv;
+}
 
 var changeVisibility = function(div){
 
@@ -178,4 +190,48 @@ var changeVisibility = function(div){
     } else {
         div.style.visibility = 'hidden';
     }
+}
+
+/**
+ * Load chartJS
+ */
+var loadedChartJS = false;
+var loadChartJS = function(canvas, type, data) {
+    if(!loadedChartJS){
+        var chartJS = document.createElement("script");
+        chartJS.onload = function () {
+            creer_graph(canvas, type, data);
+        };
+        chartJS.src = URL_CHARTJS;
+        document.head.appendChild(chartJS);
+    } else {
+        creer_graph(canvas, type, data);
+    }
+    loadedChartJS = true;
+};
+
+var create_data_for_graph = function(labels, data){
+    return {
+        labels: labels,
+        datasets: [{
+            label: 'Energie par test',
+            data: data
+        }]
+    }
+};
+
+var creer_graph = function(canvas, type, data){
+    new Chart(canvas, {
+        type: type,
+        data: data,
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
 }
