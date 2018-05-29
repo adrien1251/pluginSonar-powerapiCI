@@ -109,51 +109,54 @@ var dataFromField = function (searchField) {
     };
 
     esCall(data).done(function (response) {
-        printPowerapiCIDate(response.hits.hits[0]._source);
+        printPowerapiCIData(response.hits.hits[0]._source);
     });
 };
 
-var printPowerapiCIDate = function (powerapiData) {
-    divToInsert.textContent = '';
-    divToInsert.appendChild(actual_select_list);
-
+var printPowerapiCIData = function (powerapiData) {
     var div = document.createElement("div");
 
     var headerDiv = document.createElement("div");
     headerDiv.setAttribute('class', 'header_div');
 
     var titreProject = document.createElement("h2");
-    titreProject.textContent = "Le numéro de build " + powerapiData.build_name + " pour le projet " + powerapiData.app_name + " " +
-        "a été exécuté sur la branch " + powerapiData.branch + " et a pour nom de commit " + powerapiData.commit_name;
+    titreProject.innerHTML = "Numéro de build : " + powerapiData.build_name +  " <br/> Projet : " + powerapiData.app_name +
+        " <br/>  Branche : " + powerapiData.branch + " <br/>  Commit : " + powerapiData.commit_name;
     headerDiv.appendChild(titreProject);
 
     var energy = document.createElement("h3");
-    energy.textContent = "L'énergie total consommé par les tests de ce projet est de " + powerapiData.energy + " Joules répartie sur " +
-        powerapiData.methods.length + " tests";
+    energy.innerHTML = powerapiData.energy + " Joules répartis sur " + powerapiData.methods.length + " tests";
     headerDiv.appendChild(energy);
     div.appendChild(headerDiv);
     divToInsert.appendChild(div);
 
     var testsDiv = document.createElement("div");
-
+    var titletest = document.createElement("h1")
+    titletest.innerHTML = "Détails des tests : ";
+    testsDiv.appendChild(titletest);
+    var cpt = 1;
     powerapiData.methods.forEach(function (test) {
         var testDiv = document.createElement("div");
         testDiv.setAttribute('class', 'test_div');
 
-        var nom_test = document.createElement("h1");
+        var nom_test = document.createElement("h2");
         nom_test.textContent = test.name;
         testDiv.appendChild(nom_test);
 
-        var detail_div = document.createElement("img");
-        detail_div.setAttribute('src','https://cdn4.iconfinder.com/data/icons/miu/24/circle-add-plus-new-outline-stroke-256.png');
-        detail_div.setAttribute('onclick', 'changeVisibility(this)');
-        testDiv.appendChild(detail_div);
-
         var data_test_div = document.createElement("div");
+        data_test_div.setAttribute('id', 'details' + cpt);
         data_test_div.style.visibility = "hidden";
 
+        var button = document.createElement("button");
+        button.type='button';
+        button.setAttribute('class', 'btn btn-secondary');
+        button.setAttribute('onclick','changeVisibility(details'+cpt+')');
+        button.textContent='Afficher les détails du test';
+        testDiv.appendChild(button)
+
+
         var data_test = document.createElement("p");
-        data_test.textContent = "Sur " + test.iterations.length + " itérations, le test en moyenne, à consommé " + test.energy + " Joules et à durée " +
+        data_test.textContent = "Sur " + test.iterations.length + " itérations, le test à consommé " + test.energy + " Joules et a duré en moyenne " +
             "" + test.duration + "ms";
         data_test_div.appendChild(data_test);
 
@@ -161,18 +164,18 @@ var printPowerapiCIDate = function (powerapiData) {
 
         testsDiv.appendChild(document.createElement("hr"));
         testsDiv.appendChild(testDiv);
+        cpt++;
     });
 
 
     divToInsert.appendChild(testsDiv);
 };
 
-var changeVisibility = function(image_put){
-    var div = image_put.nextSibling;
+var changeVisibility = function(div){
 
-    if(div.style.visibility === "hidden"){
+    if(div.style.visibility == 'hidden'){
         div.style.visibility = 'visible';
     } else {
         div.style.visibility = 'hidden';
     }
-};
+}
