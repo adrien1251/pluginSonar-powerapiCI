@@ -27,10 +27,6 @@ var initSelectList = function (list, nameList) {
     return div_list;
 };
 
-/**
- * Print powerapiData to HTML
- * @param powerapiData : data to print
- */
 var printPowerapiCIData = function (powerapiData) {
     divToInsert.textContent = '';
     divToInsert.appendChild(actual_select_list);
@@ -78,18 +74,15 @@ var printPowerapiCIData = function (powerapiData) {
     }
 };
 
-/**
- * Create a div for test details
- * @param test : full test
- * @param cpt : for div id
- * @return {HTMLDivElement}
- */
 var createTestDiv = function(test, cpt){
     var testDiv = document.createElement("div");
     testDiv.setAttribute('class', 'test_div');
 
     var nom_test = document.createElement("h2");
     nom_test.textContent = test.name;
+    nom_test.style.display = "inline";
+    nom_test.style.verticalAlign = "middle";
+    nom_test.style.margin = "10px 10px 10px 10px";
     testDiv.appendChild(nom_test);
 
     var data_test_div = document.createElement("div");
@@ -100,24 +93,23 @@ var createTestDiv = function(test, cpt){
     button.type='button';
     button.setAttribute('class', 'btn btn-secondary');
     button.setAttribute('onclick','changeVisibility(details'+cpt+')');
-    button.textContent='Afficher les détails du test';
+    button.textContent='Détails du test';
     testDiv.appendChild(button);
 
-
     var data_test = document.createElement("p");
-    data_test.textContent = "Sur " + test.iterations.length + " itérations, le test à consommé " + test.energy + " Joules et a duré en moyenne " +
-        "" + test.duration + "ms";
+    data_test.innerHTML = "<div class='card border-light bg-dark text-center text-white' style='width:18rem; display:inline-grid; verticalAlign:middle; margin:10px 10px 10px 10px;'><img class='card-img-top' <div class='card-body'><h5 class='card-title'>Iterations</h5><p class='card-text'> " + test.iterations.length + " </p></div></div><div class='card bg-dark border-light text-center text-white' style='width:18rem; display:inline-grid; verticalAlign:middle; background-color:#2f171757; margin:10px 10px 10px 10px;'><img class='card-img-top' <div class='card-body'><h5 class='card-title'>Energie Moyenne</h5><p class='card-text'>" + test.energy + " Joules</p></div></div><div class='card text-center text-white border-light bg-dark' style='width:18rem; display:inline-grid; verticalAlign:middle; margin:10px 10px 10px 10px;'><img class='card-img-top' <div class='card-body'><h5 class='card-title'>Durée moyenne</h5><p class='card-text'>" + test.duration + " Millisecondes</p></div></div>"
     data_test_div.appendChild(data_test);
 
     testDiv.appendChild(data_test_div);
 
     return testDiv;
-};
+}
 
 var changeVisibility = function(div){
+
     if(div.style.visibility == 'hidden'){
         div.style.visibility = 'visible';
     } else {
         div.style.visibility = 'hidden';
     }
-};
+}
