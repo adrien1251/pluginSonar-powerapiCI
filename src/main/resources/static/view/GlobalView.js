@@ -73,7 +73,7 @@ var printPowerapiCIData = function (powerapiData) {
         divToInsert.appendChild(testsDiv);
 
         var canvas = document.createElement("canvas");
-        creer_graph(canvas, "line", create_data_for_graph(labels, data));
+        createGraph(canvas, "line", createDataForGraph(labels, data));
         divToInsert.appendChild(canvas);
     }
 };
