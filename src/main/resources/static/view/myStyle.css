@@ -1,0 +1,19 @@
+.cardContent{
+    width:18rem;
+    display:inline-grid;
+    verticalAlign:middle;
+    margin:10px 10px 10px 10px;
+    background-color:#2f171757;
+}
+
+.testName{
+    display: inline;
+    vertical-align: middle;
+    margin: 10px;
+
+}
+
+h1 {
+    color: navy;
+    margin-left: 20px;
+}
