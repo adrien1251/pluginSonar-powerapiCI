@@ -11,7 +11,7 @@ var esCall = function (dataForSearch) {
         url: proxy + ES_URL,
         type: "POST",
         dataType: 'json',
-        data: JSON.stringify(dataForSearch),
+        data: JSON.stringify(dataForSearch)
     });
 };
 

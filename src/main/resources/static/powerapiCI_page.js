@@ -33,7 +33,7 @@ const URL_LOADED_FILE = [
     "/static/powerapiCI/dependency/chart/Chart.bundle.min.js",
     "/static/powerapiCI/dependency/chart/utils/Utils.js",
     "/static/powerapiCI/view/GlobalView.js",
-    "/static/powerapiCI/js/Es_call.js"];
+    "/static/powerapiCI/js/CallBdd.js"];
 
 const LIST_COMMIT_NAME = "build_name";
 var divToInsert;

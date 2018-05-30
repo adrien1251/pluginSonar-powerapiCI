@@ -4,7 +4,7 @@
  * @param data : data to print
  * @return {{labels: *, datasets: *[]}}
  */
-var create_data_for_graph = function(labels, data){
+var createDataForGraph = function(labels, data){
     return {
         labels: labels,
         datasets: [{
@@ -18,9 +18,9 @@ var create_data_for_graph = function(labels, data){
  * Create graph and display it into canvas
  * @param canvas : display the graph into it
  * @param type : Line, Bar, Radar, Bubble, Area, Mixed..
- * @param data : data create by "create_data_for_graph"
+ * @param data : data create by "createDataForGraph"
  */
-var creer_graph = function(canvas, type, data){
+var createGraph = function(canvas, type, data){
     new Chart(canvas, {
         type: type,
         data: data,

@@ -28,43 +28,50 @@ var initSelectList = function (list, nameList) {
 };
 
 var printPowerapiCIData = function (powerapiData) {
-    var div = document.createElement("div");
+    divToInsert.textContent = '';
+    divToInsert.appendChild(actual_select_list);
 
-    var headerDiv = document.createElement("div");
-    headerDiv.setAttribute('class', 'header_div');
+    if(powerapiData === null){
+        divToInsert.textContent += "Aucune donnée n'est disponible pour votre selection actuel";
+    } else {
+        var div = document.createElement("div");
 
-    var titreProject = document.createElement("h2");
-    titreProject.innerHTML = "Numéro de build : " + powerapiData.build_name +  " <br/> Projet : " + powerapiData.app_name +
-        " <br/>  Branche : " + powerapiData.branch + " <br/>  Commit : " + powerapiData.commit_name;
-    headerDiv.appendChild(titreProject);
+        var headerDiv = document.createElement("div");
+        headerDiv.setAttribute('class', 'header_div');
 
-    var energy = document.createElement("h3");
-    energy.innerHTML = powerapiData.energy + " Joules répartis sur " + powerapiData.methods.length + " tests";
-    headerDiv.appendChild(energy);
-    div.appendChild(headerDiv);
-    divToInsert.appendChild(div);
+        var titreProject = document.createElement("h2");
+        titreProject.innerHTML = "Numéro de build : " + powerapiData.build_name + " <br/> Projet : " + powerapiData.app_name +
+            " <br/>  Branche : " + powerapiData.branch + " <br/>  Commit : " + powerapiData.commit_name;
+        headerDiv.appendChild(titreProject);
 
-    var testsDiv = document.createElement("div");
-    var titletest = document.createElement("h1");
-    titletest.innerHTML = "Détails des tests : ";
-    testsDiv.appendChild(titletest);
+        var energy = document.createElement("h3");
+        energy.innerHTML = powerapiData.energy + " Joules répartis sur " + powerapiData.methods.length + " tests";
+        headerDiv.appendChild(energy);
+        div.appendChild(headerDiv);
+        divToInsert.appendChild(div);
 
-    var labels = [];
-    var data = [];
-    var cpt = 1;
-    powerapiData.methods.forEach(function (test) {
-        testsDiv.appendChild(document.createElement("hr"));
-        testsDiv.appendChild(createTestDiv(test, cpt++));
+        var testsDiv = document.createElement("div");
+        var titletest = document.createElement("h1");
+        titletest.innerHTML = "Détails des tests : ";
+        testsDiv.appendChild(titletest);
 
-        labels.push(test.name);
-        data.push(test.energy);
-    });
+        var labels = [];
+        var data = [];
+        var cpt = 1;
+        powerapiData.methods.forEach(function (test) {
+            testsDiv.appendChild(document.createElement("hr"));
+            testsDiv.appendChild(createTestDiv(test, cpt++));
 
-    divToInsert.appendChild(testsDiv);
+            labels.push(test.name);
+            data.push(test.energy);
+        });
 
-    var canvas = document.createElement("canvas");
-    loadChartJS(canvas, "line", create_data_for_graph(labels, data));
-    divToInsert.appendChild(canvas);
+        divToInsert.appendChild(testsDiv);
+
+        var canvas = document.createElement("canvas");
+        createGraph(canvas, "line", createDataForGraph(labels, data));
+        divToInsert.appendChild(canvas);
+    }
 };
 
 var createTestDiv = function(test, cpt){
