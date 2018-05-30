@@ -100,6 +100,8 @@ var createTestDiv = function(test, cpt){
 
 var changeVisibility = function(div){
 
+    div = div.nextSibling;
+
     if(div.style.visibility == 'hidden'){
         div.style.visibility = 'visible';
     } else {
