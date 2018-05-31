@@ -38,6 +38,8 @@ var actual_select_list;
 const URL_LOADED_JS_FILE = [
     "/static/powerapiCI/dependency/chart/Chart.bundle.min.js",
     "/static/powerapiCI/dependency/chart/utils/Utils.js",
+    "/static/powerapiCI/dependency/d3js/d3.min.js",
+    "/static/powerapiCI/dependency/d3js/utils/Utils.js",
     "/static/powerapiCI/view/GlobalView.js",
     "/static/powerapiCI/js/CallBdd.js",
     "/static/powerapiCI/view/MapperHTML.js"];

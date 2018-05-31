@@ -35,7 +35,7 @@ var printPowerapiCIData = function (powerapiData) {
         divToInsert.textContent += "Aucune donnée n'est disponible pour votre selection actuel";
     } else {
         mapHeader(powerapiData);
-        
+
         var labels = [];
         var data = [];
 
