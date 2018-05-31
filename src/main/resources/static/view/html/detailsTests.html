@@ -1,25 +1,21 @@
 <div class="test_div">
-    <h2 class="testName thicker">{$testName}</h2>
+    <h2 class="testName thicker">${testName}</h2>
     <button type="button" class="btn btn-secondary" onclick="changeVisibility(this)">Détails du test</button>
-        <div style="visibility: hidden;">
-            <p>
-                <div class="cardContent border-light bg-dark text-center text-white">
-                    <img class="card-img-top">
-                    <h5 class="card-title">Iterations</h5>
-                    <p class="card-text"> {$numberOfIterations} </p>
-                 </div>
-
-                  <div class="cardContent bg-dark border-light text-center text-white">
-                     <img class="card-img-top">
-                      <h5 class="card-title">Energie Moyenne</h5>
-                     <p class="card-text">{$energyTest} Joules</p>
-                  </div>
-
-                 <div class="cardContente text-center text-white border-light bg-dark">
-                     <img class="card-img-top">
-                     <h5 class="card-title">Durée moyenne</h5>
-                     <p class="card-text">{$durationTest} Millisecondes</p>
-                 </div>
-            </p>
+    <div class="hide" style="visibility: hidden;">
+        <div class="cardContent border-light bg-dark text-center text-white">
+            <img class="card-img-top"/>
+            <h5 class="card-title">Iterations</h5>
+            <p class="card-text"> ${numberOfIterations} </p>
         </div>
+        <div class="cardContent bg-dark border-light text-center text-white">
+            <img class="card-img-top"/>
+            <h5 class="card-title">Energie Moyenne</h5>
+            <p class="card-text">${energyTest} Joules</p>
+        </div>
+        <div class="cardContent text-center text-white border-light bg-dark">
+            <img class="card-img-top"/>
+            <h5 class="card-title">Durée moyenne</h5>
+            <p class="card-text">${durationTest} Millisecondes</p>
+        </div>
+    </div>
 </div>

@@ -1,13 +1,9 @@
-<head>
-    <link rel="stylesheet" type="text/css" href="/static/powerapiCI/view/myStyle.css">
-</head>
-
 <div class="header_div">
-    <h2>Numéro de build : {$commitNumber} <br>
-        Projet : {$projectName} <br>
-        Branche : {$branchName} <br>
-        Commit : {$commitName} <br>
-        Durée de l'éxecution : {$executionDuration}
+    <h2>Numéro de build : ${buildNumber} <br>
+        Projet : ${projectName} <br>
+        Branche : ${branchName} <br>
+        Commit : ${commitName} <br>
+        Durée de l'éxecution : ${executionDuration}
     </h2>
-    <h3>{$energyAllBuild} Joules répartis sur {$numberOfTests} tests</h3>
+    <h3>${energyAllBuild} Joules répartis sur ${numberOfTests} tests</h3>
 </div>
