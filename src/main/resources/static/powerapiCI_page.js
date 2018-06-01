@@ -3,6 +3,7 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
     options.el.textContent = '';
     loadAllHTML();
     loadAllCss();
+    loadD3JS();
     loadAllJSScript();
 
     window.SonarRequest.getJSON('/api/issues/search', {
@@ -41,20 +42,32 @@ const URL_LOADED_JS_FILE = [
     "/static/powerapiCI/view/GlobalView.js",
     "/static/powerapiCI/js/CallBdd.js",
     "/static/powerapiCI/view/MapperHTML.js",
-    "https://d3js.org/d3.v5.min.js"];
+    "/static/powerapiCI/dependency/d3js/utils/Utils.js"];
 
 var loadAllJSScript = function () {
     URL_LOADED_JS_FILE.forEach(function (URL) {
-        var chartJS = document.createElement("script");
-        chartJS.src = URL;
-        document.head.appendChild(chartJS);
+        var script = document.createElement("script");
+        script.src = URL;
+        document.head.appendChild(script);
     });
+};
+
+var loadD3JS = function () {
+    var script = document.createElement("script");
+    script.onload = function(){
+        var otherScript = document.createElement("script");
+        otherScript .src = "/static/powerapiCI/dependency/d3js/utils/Box.js";
+        document.head.appendChild(otherScript );
+    };
+    script.src ="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js";
+    document.head.appendChild(script);
 };
 
 /* Constant des autres fichiers */
 const URL_LOADED_CSS_FILE = [
+    "https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css",
     "/static/powerapiCI/view/css/myStyle.css",
-    "https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css"];
+    "/static/powerapiCI/view/css/boxPlot.css"];
 
 var loadAllCss = function () {
     URL_LOADED_CSS_FILE.forEach(function (css) {
