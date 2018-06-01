@@ -3,14 +3,14 @@
     display:inline-grid;
     verticalAlign:middle;
     margin:10px 10px 10px 10px;
-    background-color:#2f171757;
+    background-color:#3b8ebf57;
 }
 
 .testName{
     display: inline;
     vertical-align: middle;
     margin: 10px;
-
+    font-size: 21px;
 }
 
 h1 {

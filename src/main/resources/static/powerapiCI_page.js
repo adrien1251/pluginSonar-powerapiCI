@@ -38,11 +38,10 @@ var actual_select_list;
 const URL_LOADED_JS_FILE = [
     "/static/powerapiCI/dependency/chart/Chart.bundle.min.js",
     "/static/powerapiCI/dependency/chart/utils/Utils.js",
-    "/static/powerapiCI/dependency/d3js/d3.min.js",
-    "/static/powerapiCI/dependency/d3js/utils/Utils.js",
     "/static/powerapiCI/view/GlobalView.js",
     "/static/powerapiCI/js/CallBdd.js",
-    "/static/powerapiCI/view/MapperHTML.js"];
+    "/static/powerapiCI/view/MapperHTML.js",
+    "https://d3js.org/d3.v5.min.js"];
 
 var loadAllJSScript = function () {
     URL_LOADED_JS_FILE.forEach(function (URL) {
@@ -54,7 +53,8 @@ var loadAllJSScript = function () {
 
 /* Constant des autres fichiers */
 const URL_LOADED_CSS_FILE = [
-    "/static/powerapiCI/view/css/myStyle.css"];
+    "/static/powerapiCI/view/css/myStyle.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css"];
 
 var loadAllCss = function () {
     URL_LOADED_CSS_FILE.forEach(function (css) {

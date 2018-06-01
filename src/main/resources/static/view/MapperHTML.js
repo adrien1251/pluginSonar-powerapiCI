@@ -21,6 +21,7 @@ var mapDetailTest = function(test){
     hashMap['numberOfIterations'] = test.iterations.length;
     hashMap['energyTest'] = test.energy;
     hashMap['durationTest'] = test.duration;
+    hashMap['tendency'] = 'oi oi-arrow-thick-right';
 
     divToInsert.innerHTML += mapFile(HTML_FILE[0], hashMap);
 };
