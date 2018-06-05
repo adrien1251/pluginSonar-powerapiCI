@@ -51,3 +51,30 @@ var dataFromField = function (build_name) {
         printPowerapiCIData(response.hits.hits[0]._source);
     });
 };
+
+/**
+ * Get value for the build name previous_build_name
+ * @param previous_build_name : build name to search
+ */
+var energyFromPreviousBuild = function (actual_select_list, build_name) {
+var tmpList = [] ;
+    for(var i = 0 ; i < actual_select_list.length ; i++){
+        if(actual_select_list(i) < build_name){
+            tmpList.add(build_name - actual_select_list)
+        }
+    }
+    var previous_build_name = actual_select_list.max();
+    var data = {
+        "query": {
+            "bool": {
+                "must": [
+                    {"match": {build_name: previous_build_name}}
+                ]
+            }
+        }
+    };
+
+    esCall(data).done(function (response) {
+        printPowerapiCIData(response.hits.hits[0].energy);
+    });
+};

@@ -21,10 +21,26 @@ var mapDetailTest = function(test){
     hashMap['numberOfIterations'] = test.iterations.length;
     hashMap['energyTest'] = test.energy;
     hashMap['durationTest'] = test.duration;
-    hashMap['tendency'] = 'oi oi-arrow-thick-right';
+    hashMap['tendency'] = arrowDirection;
 
     divToInsert.innerHTML += mapFile(HTML_FILE[0], hashMap);
 };
+
+const arrowDirection = function(test){
+    var arrow = '';
+    var testEnergySup = previousTest.energy * 1.1;
+    var testEnergyInf = previousTest.energy * 0.9;
+    if(test.energy < testEnergySup && test.energy > testEnergyInf){
+        arrow = 'oi oi-arrow-thick-right';
+    }
+    else if(test.energy > testEnergySup){
+        arrow = 'oi oi-arrow-thick-top';
+    }
+    else if(test.energy < testEnergyInf){
+        arrow = 'oi oi-arrow-thick-bottom';
+    }
+    return arrow;
+}
 
 var mapHeader = function(powerapiData){
     var hashMap = {};
