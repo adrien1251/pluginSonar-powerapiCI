@@ -23,7 +23,12 @@ var mapDetailTest = function(test){
     hashMap['durationTest'] = test.duration;
     hashMap['tendency'] = arrowDirection;
 
-    divToInsert.innerHTML += mapFile(HTML_FILE[0], hashMap);
+    var toHtml = document.createElement('div');
+    toHtml.innerHTML = mapFile(HTML_FILE[0], hashMap);
+
+    createBoxPlot(remplirJSonForD3JS(test), toHtml.getElementsByClassName('canvas_boxplot')[0], 300, 200);
+
+    divToInsert.appendChild(toHtml);
 };
 
 const arrowDirection = function(test){

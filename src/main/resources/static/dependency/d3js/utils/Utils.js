@@ -1,17 +1,22 @@
-var createBoxPlot = function(jsonData) {
+var createBoxPlot = function(jsonData, insert_div, width_cons, height_cons) {
     var labels = true; // show the text labels beside individual boxplots?
 
-    var margin = {top: 30, right: 50, bottom: 70, left: 50};
-    var width = 1200 - margin.left - margin.right;
-    var height = 800 - margin.top - margin.bottom;
+    var margin = {top: 30, right: 100, bottom: 70, left: 50};
+    var width = width_cons || window.innerWidth;
+    width = width - margin.left - margin.right;
+
+    var height = height_cons || window.innerHeight;
+    height = height - margin.top - margin.bottom;
 
     var min = Infinity,
         max = -Infinity;
 
     var data = [];
 
+    var divPutBox = insert_div || "body";
+
     var cpt = 0;
-    for(var name of Object.keys(jsonData[0])){
+    for (var name of Object.keys(jsonData[0])) {
         data[cpt] = [];
         data[cpt][0] = name;
         data[cpt][1] = [];
@@ -20,12 +25,12 @@ var createBoxPlot = function(jsonData) {
 
     jsonData.forEach(function (x) {
         cpt = 0;
-        for(var name of Object.keys(jsonData[0])){
+        for (var name of Object.keys(jsonData[0])) {
             var nb = x[name];
             data[cpt][1].push(nb);
 
-            if(max < nb) max = nb;
-            if(min > nb) min = nb;
+            if (max < nb) max = nb;
+            if (min > nb) min = nb;
             cpt++;
         }
     });
@@ -36,7 +41,7 @@ var createBoxPlot = function(jsonData) {
         .domain([min, max])
         .showLabels(labels);
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select(divPutBox).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .attr("class", "box")
@@ -73,33 +78,10 @@ var createBoxPlot = function(jsonData) {
         })
         .call(chart.width(x.rangeBand()));
 
-
-    // add a title
-    svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", (margin.top / 2))
-        .attr("text-anchor", "middle")
-        .style("font-size", "18px")
-        //.style("text-decoration", "underline")
-        .text("BoxPlot energy");
-
     // draw y axis
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis)
-        .append("text") // and text1
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .style("font-size", "16px")
-        .text("Energy en J");
-
-    // draw x axis
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + (height + margin.top + 10) + ")")
-        .call(xAxis);
 };
 
 // Returns a function to compute the interquartile range.
@@ -114,4 +96,16 @@ function iqr(k) {
         while (d[--j] > q3 + iqr);
         return [i, j];
     };
+};
+
+
+var remplirJSonForD3JS = function(test){
+    var json = [];
+    var nbIterations = test.iterations.length;
+    for(var i=0; i<nbIterations; i++){
+        var iteration = {};
+        iteration[test.name] = test.iterations[i].energy;
+        json.push(iteration);
+    }
+    return json;
 };

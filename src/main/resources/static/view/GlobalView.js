@@ -49,9 +49,6 @@ var printPowerapiCIData = function (powerapiData) {
 
         });
 
-        var json = remplirJSonForD3JS(powerapiData.methods);
-        createBoxPlot(json);
-
         var canvas = document.createElement("canvas");
         createGraph(canvas, "line", createDataForGraph(labels, data));
         divToInsert.appendChild(canvas);
@@ -71,19 +68,4 @@ var changeVisibility = function(div){
     } else {
         div.style.visibility = 'hidden';
     }
-};
-
-var remplirJSonForD3JS = function(methods){
-    var json = [];
-    var nbIterations = methods[0].iterations.length;
-    for(var i=0; i<nbIterations; i++){
-        var iteration = {};
-        methods.forEach(function (test) {
-            if(test.name != "should_test_suite_fibonacci_use_puissance") {
-                iteration[test.name] = test.iterations[i].energy;
-            }
-        });
-        json.push(iteration);
-    }
-    return json;
 };
