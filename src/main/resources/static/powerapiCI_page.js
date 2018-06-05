@@ -79,8 +79,6 @@ var loadAllCss = function () {
     });
 };
 
-//rel="stylesheet" type="text/css" href="/static/powerapiCI/view/myStyle.css"
-
 const URL_LOADED_HTML_FILE = [
     "/static/powerapiCI/view/html/detailsTests.html",
     "/static/powerapiCI/view/html/header.html"

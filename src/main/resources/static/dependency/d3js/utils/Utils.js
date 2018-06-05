@@ -16,7 +16,7 @@ var createBoxPlot = function(jsonData, insert_div, width_cons, height_cons) {
     var divPutBox = insert_div || "body";
 
     var cpt = 0;
-    for(var name of Object.keys(jsonData[0])){
+    for (var name of Object.keys(jsonData[0])) {
         data[cpt] = [];
         data[cpt][0] = name;
         data[cpt][1] = [];
@@ -25,12 +25,12 @@ var createBoxPlot = function(jsonData, insert_div, width_cons, height_cons) {
 
     jsonData.forEach(function (x) {
         cpt = 0;
-        for(var name of Object.keys(jsonData[0])){
+        for (var name of Object.keys(jsonData[0])) {
             var nb = x[name];
             data[cpt][1].push(nb);
 
-            if(max < nb) max = nb;
-            if(min > nb) min = nb;
+            if (max < nb) max = nb;
+            if (min > nb) min = nb;
             cpt++;
         }
     });
@@ -82,7 +82,7 @@ var createBoxPlot = function(jsonData, insert_div, width_cons, height_cons) {
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis)
-
+};
 
 // Returns a function to compute the interquartile range.
 function iqr(k) {
