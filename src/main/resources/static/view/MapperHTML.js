@@ -15,37 +15,25 @@ var mapFile = function (htmlFile, hashMap) {
     return html;
 };
 
-var mapDetailTest = function(test){
+var mapDetailTest = function(test, buildName){
     var hashMap = {};
     hashMap['testName'] = test.name;
     hashMap['numberOfIterations'] = test.iterations.length;
     hashMap['energyTest'] = test.energy;
     hashMap['durationTest'] = test.duration;
-    hashMap['tendency'] = arrowDirection;
 
     var toHtml = document.createElement('div');
     toHtml.innerHTML = mapFile(HTML_FILE[0], hashMap);
 
     createBoxPlot(remplirJSonForD3JS(test), toHtml.getElementsByClassName('canvas_boxplot')[0], 300, 200);
-
+    arrowDirection(buildName, test, toHtml.getElementsByClassName('arrow')[0]);
     divToInsert.appendChild(toHtml);
 };
 
-const arrowDirection = function(test){
-    var arrow = '';
-    var testEnergySup = previousTest.energy * 1.1;
-    var testEnergyInf = previousTest.energy * 0.9;
-    if(test.energy < testEnergySup && test.energy > testEnergyInf){
-        arrow = 'oi oi-arrow-thick-right';
-    }
-    else if(test.energy > testEnergySup){
-        arrow = 'oi oi-arrow-thick-top';
-    }
-    else if(test.energy < testEnergyInf){
-        arrow = 'oi oi-arrow-thick-bottom';
-    }
-    return arrow;
-}
+const arrowDirection = function(buildName, test, div){
+    energyFromPreviousBuild(buildName, test, div);
+
+};
 
 var mapHeader = function(powerapiData){
     var hashMap = {};

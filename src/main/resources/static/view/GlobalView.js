@@ -41,7 +41,7 @@ var printPowerapiCIData = function (powerapiData) {
 
         powerapiData.methods.forEach(function (test) {
             divToInsert.appendChild(document.createElement("hr"));
-            mapDetailTest(test);
+            mapDetailTest(test, powerapiData.build_name);
 
             labels.push(test.name);
             data.push(test.energy);
@@ -50,7 +50,7 @@ var printPowerapiCIData = function (powerapiData) {
         });
 
         var canvas = document.createElement("canvas");
-        createGraph(canvas, "line", createDataForGraph(labels, data));
+        createGraph(canvas, "bar", createDataForGraph(labels, data));
         divToInsert.appendChild(canvas);
     }
 };

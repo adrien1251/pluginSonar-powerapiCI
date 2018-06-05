@@ -52,29 +52,61 @@ var dataFromField = function (build_name) {
     });
 };
 
+function getPreviousBuildName(build_name) {
+    var list = actual_select_list.getElementsByTagName('select')[0].options;
+    var tmpList = [];
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].value < build_name) {
+            tmpList.push(list[i].value);
+        }
+    }
+    var previous_build_name = Math.max.apply(Math, tmpList);
+    return previous_build_name;
+}
+
 /**
  * Get value for the build name previous_build_name
  * @param previous_build_name : build name to search
  */
-var energyFromPreviousBuild = function (actual_select_list, build_name) {
-var tmpList = [] ;
-    for(var i = 0 ; i < actual_select_list.length ; i++){
-        if(actual_select_list(i) < build_name){
-            tmpList.add(build_name - actual_select_list)
-        }
-    }
-    var previous_build_name = actual_select_list.max();
+var energyFromPreviousBuild = function (build_name, test, div) {
+    var previous_build_name = getPreviousBuildName(build_name);
     var data = {
         "query": {
             "bool": {
                 "must": [
-                    {"match": {build_name: previous_build_name}}
+                    {"match": {build_name: ""+previous_build_name}}
                 ]
             }
         }
     };
 
     esCall(data).done(function (response) {
-        printPowerapiCIData(response.hits.hits[0].energy);
+        if(response.hits.hits.length == 0){
+            div.setAttribute('class', 'oi oi-media-record');
+        }
+        else{
+            var previousEnergy = 0;
+            var methods =  response.hits.hits[0]._source.methods;
+
+            methods.forEach(function(method){
+                if(method.name === test.name){
+                    previousEnergy = method.energy;
+                }
+            })
+
+            var arrow = '';
+            var testEnergySup = previousEnergy * 1.1;
+            var testEnergyInf = previousEnergy * 0.9;
+            if(test.energy < testEnergySup && test.energy > testEnergyInf){
+                arrow = 'oi oi-arrow-thick-right';
+            }
+            else if(test.energy > testEnergySup){
+                arrow = 'oi oi-arrow-thick-top';
+            }
+            else if(test.energy < testEnergyInf){
+                arrow = 'oi oi-arrow-thick-bottom';
+            }
+            div.setAttribute('class', arrow);
+        }
     });
 };
