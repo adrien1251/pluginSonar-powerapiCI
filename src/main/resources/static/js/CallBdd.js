@@ -48,7 +48,10 @@ var dataFromField = function (build_name) {
     };
 
     esCall(data).done(function (response) {
+        actual_select_list = document.getElementById(actual_select_list.getAttribute('id')) || actual_select_list;
         printPowerapiCIData(response.hits.hits[0]._source);
+        actual_powerapi_data = response.hits.hits[0]._source;
+
     });
 };
 

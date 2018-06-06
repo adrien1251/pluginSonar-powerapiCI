@@ -42,7 +42,10 @@ var mapHeader = function(powerapiData){
     hashMap['branchName'] = powerapiData.branch;
     hashMap['commitName'] = powerapiData.commit_name;
     hashMap['executionDuration'] = powerapiData.duration;
+    hashMap['energyAllBuild'] = powerapiData.energy;
     hashMap['numberOfTests'] = powerapiData.methods.length;
 
-    divToInsert.innerHTML += mapFile(HTML_FILE[1], hashMap);
+    var toHtml = document.createElement('div');
+    toHtml.innerHTML = mapFile(HTML_FILE[1], hashMap);
+    divToInsert.appendChild(toHtml);
 };

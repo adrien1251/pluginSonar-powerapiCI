@@ -34,6 +34,7 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
 const LIST_COMMIT_NAME = "build_name";
 var divToInsert;
 var actual_select_list;
+var actual_powerapi_data;
 
 /* Constant des autres fichiers */
 const URL_LOADED_JS_FILE = [

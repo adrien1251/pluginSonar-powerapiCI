@@ -51,7 +51,6 @@ var createBoxPlot = function(jsonData, insert_div, width_cons, height_cons) {
     // the x-axis
     var x = d3.scale.ordinal()
         .domain(data.map(function (d) {
-            console.log(d);
             return d[0]
         }))
         .rangeRoundBands([0, width], 0.7, 0.3);

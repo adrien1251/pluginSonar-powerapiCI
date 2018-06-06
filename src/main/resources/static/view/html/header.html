@@ -6,4 +6,10 @@
         Durée de l'éxecution : ${executionDuration}
     </h2>
     <h3>${energyAllBuild} Joules répartis sur ${numberOfTests} tests</h3>
+    <div class="input-group">
+        <input type="text" class="form-control" id="filter" placeholder="Filter can be regular expression">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick='printPowerapiCIData(actual_powerapi_data, document.getElementById("filter").value)'>Go !</button>
+        </span>
+    </div>
 </div>
