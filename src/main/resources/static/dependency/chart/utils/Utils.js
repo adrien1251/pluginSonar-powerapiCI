@@ -1,3 +1,9 @@
+var randomColor = function(){
+  return "rgba("+Math.floor(Math.random()* Math.floor(256))+"," +
+      ""+Math.floor(Math.random()* Math.floor(256))+", " +
+      ""+Math.floor(Math.random()* Math.floor(256))+", 1)";
+};
+
 /**
  * Create data for feed graph
  * @param labels : title of data
@@ -14,6 +20,14 @@ var createDataForGraph = function(labels, data){
     }
 };
 
+var createDataForBubbleGraph = function(labels, data){
+    var dataReturn = {};
+    dataReturn.datasets = [];
+    for(var i =0; i<labels.length; i++){
+        dataReturn.datasets.push({label:labels[i], data:data[i], backgroundColor: randomColor()});
+    }
+    return dataReturn;
+};
 /**
  * Create graph and display it into canvas
  * @param canvas : display the graph into it

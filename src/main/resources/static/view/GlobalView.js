@@ -1,78 +1,103 @@
-/**
- * Create select list to select commit name.
- * @param list
- * @param nameList
- * @return the select list to add
- */
-var initSelectList = function (list, nameList) {
-    var div_list = document.createElement('div');
-    div_list.setAttribute('id', nameList);
+var establishDesign = function(){
+    var globalDiv = document.createElement('div');
+    globalDiv.setAttribute('class', 'row');
 
-    var label_list = document.createElement('label');
-    label_list.textContent = nameList;
+    divForInsertingMenu = document.createElement("div");
+    divForInsertingMenu.setAttribute('class', 'menu-fixed col-3');
 
-    var commit_list = document.createElement('select');
-    commit_list.setAttribute('name', nameList);
-    commit_list.setAttribute('onchange', 'dataFromField(this.options[this.selectedIndex].value)');
+    var rightDiv = document.createElement("div");
+    rightDiv.setAttribute('class', 'col-9');
+
+    divForInsertingTest = document.createElement("div");
+    divForInsertingTest.setAttribute('class', 'margin-top');
+
+    divForChart = document.createElement("div");
+    divForChart.setAttribute('class', 'margin-top');
+
+    rightDiv.appendChild(divForInsertingTest);
+    rightDiv.appendChild(divForChart);
+
+    var divUseless = document.createElement("div");
+    divUseless.setAttribute('class', 'col-3');
+
+    globalDiv.appendChild(divUseless);
+    globalDiv.appendChild(divForInsertingMenu);
+    globalDiv.appendChild(rightDiv);
+
+    divToInsert.appendChild(globalDiv);
+};
+
+
+var generateOptionList = function(list, selectedValue){
+    var optionList = "";
     var option;
     list.forEach(function (obj) {
         option = document.createElement('option');
         option.setAttribute('value', obj);
         option.textContent = obj;
-        commit_list.appendChild(option);
+        if(selectedValue === obj){
+            option.setAttribute('selected', 'selected');
+        }
+        optionList += option.outerHTML;
     });
 
-    div_list.appendChild(label_list);
-    div_list.appendChild(commit_list);
-    return div_list;
+    return optionList;
 };
 
-var printPowerapiCIData = function (powerapiData, filter) {
-    divToInsert.textContent = '';
-    divToInsert.appendChild(actual_select_list);
+var setFilter = function(powerapiData, filter){
+  actual_filter = filter;
+  printPowerapiCIData(powerapiData);
+};
+
+var printPowerapiCIData = function (powerapiData) {
+    divForInsertingTest.textContent = '';
 
     if (powerapiData === null) {
-        divToInsert.textContent += "Aucune donnée n'est disponible pour votre selection actuel";
+        divForInsertingTest.textContent += "Aucune donnée n'est disponible pour votre selection actuel";
     } else {
         mapHeader(powerapiData);
 
         var labels = [];
-        labels[0] = []; //graph 1
-        labels[1] = []; // graph 2
         var data = [];
-        data[0] = [];
-        data[1] = [];
 
-        var objetForGraph = [];
+        var dataBubble = [];
+        var cpt = 0;
+
+        var divDesign = document.createElement('div');
+        divDesign.setAttribute('class', 'row');
 
         powerapiData.methods.forEach(function (test) {
-            if (filter === undefined || test.name.match(filter)) {
-                divToInsert.appendChild(document.createElement("hr"));
-                mapDetailTest(test, powerapiData.build_name);
+            if (actual_filter === undefined || test.name.match(actual_filter)) {
+                var bubble = [];
 
-                labels[0].push(test.name);
-                data[0].push(test.energy);
+                if(cpt%2 === 0 && cpt != 0){
+                    divForInsertingTest.appendChild(divDesign);
+                    divDesign = document.createElement('div');
+                    divDesign.setAttribute('class', 'row');
+                }
+                mapDetailTest(test, powerapiData.build_name, divDesign);
 
-                objetForGraph.push({duree: test.duration, energy: test.energy, name: test.name});
+                labels.push(test.name);
+                data.push(test.energy);
+
+                test.iterations.forEach(function(it){
+                    bubble.push({x:(it.time_end-it.time_begin), y:it.energy, r:10});
+                });
+
+                dataBubble.push(bubble);
+                cpt++;
             }
         });
+        /* for the last div */
+        divForInsertingTest.appendChild(divDesign);
 
         var canvas = document.createElement("canvas");
-        createGraph(canvas, "bar", createDataForGraph(labels[0], data[0]));
-        divToInsert.appendChild(canvas);
+        createGraph(canvas, "bar", createDataForGraph(labels, data));
+        divForChart.appendChild(canvas);
 
-        objetForGraph.sort(function (a, b) {
-            return a.duree - b.duree;
-        });
-        objetForGraph.forEach(function (obj) {
-            if (obj.name != "should_test_suite_fibonacci_use_puissance") {
-                labels[1].unshift(obj.name + " " + obj.duree + "ms");
-                data[1].unshift(obj.energy);
-            }
-        });
         var canvas1 = document.createElement("canvas");
-        createGraph(canvas1, "horizontalBar", createDataForGraph(labels[1], data[1]));
-        divToInsert.appendChild(canvas1);
+        createGraph(canvas1, "bubble", createDataForBubbleGraph(labels, dataBubble));
+        divForChart.appendChild(canvas1);
     }
 };
 
@@ -83,9 +108,9 @@ var changeVisibility = function (div) {
     while (div.className === undefined) {
         div = div.nextSibling;
     }
-    if (div.style.visibility == 'hidden') {
-        div.style.visibility = 'visible';
+    if (div.style.display == 'none') {
+        div.style.display = 'block';
     } else {
-        div.style.visibility = 'hidden';
+        div.style.display = 'none';
     }
 };

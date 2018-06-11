@@ -1,27 +1,41 @@
-<div class="test_div">
-    <h2 class="testName thicker">${testName}</h2>
-    <button type="button" class="btn btn-secondary" onclick="changeVisibility(this)">Détails du test</button>
-    <div class="hide" style="visibility: hidden;">
-        <div class="cardContent border-light bg-dark text-center text-white">
-            <img class="card-img-top"/>
-            <h5 class="card-title">Iterations   <span class="oi oi-loop-circular"></span></h5>
-            <p class="card-text"> ${numberOfIterations} </p>
+<div class="margin-top col text-center">
+    <h2 class="testName thicker text-center">${testName}</h2>
+    <button type="button" class="btn btn-secondary float-right margin-right15" onclick="changeVisibility(this)"><span class="oi oi-menu"></span></button>
+    <div class="hide margin-top" style="display: none;">
+        <div class="row">
+            <div class="col">
+                <div class="card text-center" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Iterations</h5>
+                        <p class="card-text">${numberOfIterations}</p>
+                    </div>
+                </div>
+                <div class="card text-center" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Energie Moyenne</h5>
+                        <p class="card-text">${energyTest} Joules</p>
+                    </div>
+                </div>
+                <div class="card text-center" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Durée moyenne</h5>
+                        <p class="card-text">${durationTest} ms</p>
+                    </div>
+                </div>
+                <div class="card text-center" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Tendance</h5>
+                        <span class='arrow'></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-center" style="width: 18rem;">
+                    <div class="card-body">
+                        <div class="canvas_boxplot"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="cardContent bg-dark border-light text-center text-white">
-            <img class="card-img-top"/>
-            <h5 class="card-title">Energie Moyenne   <span class="oi oi-bolt"></span></h5>
-            <p class="card-text">${energyTest} Joules</p>
-        </div>
-        <div class="cardContent text-center text-white border-light bg-dark">
-            <img class="card-img-top"/>
-            <h5 class="card-title">Durée moyenne   <span class="oi oi-clock"></span></h5>
-            <p class="card-text">${durationTest} Millisecondes</p>
-        </div>
-        <div class="cardContent text-center text-white border-light bg-dark">
-            <img class="card-img-top"/>
-            <h5 class="card-title">Tendance</h5>
-            <span class='arrow'></span>
-        </div>
-        <div class="cardContent text-center text-white border-light bg-dark canvas_boxplot"></div>
     </div>
 </div>

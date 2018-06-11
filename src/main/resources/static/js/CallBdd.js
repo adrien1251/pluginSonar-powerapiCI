@@ -1,5 +1,5 @@
 var proxy = 'https://cors-anywhere.herokuapp.com/';
-const ES_URL = "http://elasticsearch.app.projet-davidson.fr/powerapici_test/_search";
+const ES_URL = "http://elasticsearch.app.projet-davidson.fr/powerapici/_search";
 
 /**
  * Do ajax call to get dataSearch

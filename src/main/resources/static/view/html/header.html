@@ -1,15 +1,35 @@
 <div class="header_div">
-    <h2>Numéro de build : ${buildNumber} <br>
-        Projet : ${projectName} <br>
-        Branche : ${branchName} <br>
-        Commit : ${commitName} <br>
-        Durée de l'éxecution : ${executionDuration}
-    </h2>
-    <h3>${energyAllBuild} Joules répartis sur ${numberOfTests} tests</h3>
-    <div class="input-group">
-        <input type="text" class="form-control" id="filter" placeholder="Filter can be regular expression">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="button" onclick='printPowerapiCIData(actual_powerapi_data, document.getElementById("filter").value)'>Go !</button>
-        </span>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center margin-top-bot">
+                <a href="${url_project}" target="_blank"><h1>${nameProject}</h1></a>
+            </div>
+        </div>
+        <hr>
+        <div class="row margin-top-bot">
+            <div class="col-sm text-center">
+                <a href="${url_build}" target="_blank">Build <br><h2 class="text-success">N° ${buildNumber}</h2></a>
+            </div>
+            <div class="col-sm text-center">
+                Executed on branche </br><h2 class="text-success">${branchName}</h2>
+            </div>
+            <div class="col-sm text-center">
+                Commit</br><h2 class="text-success">N° ${commitName}</h2>
+            </div>
+        </div>
+        <div class="row margin-top-bot">
+            <div class="col-sm text-center">
+                Execution time <br><h2 class="text-success">${executionDuration} ms</h2>
+            </div>
+            <div class="col-sm text-center">
+                Number tests</br><h2 class="text-success">${numberOfTests}</h2>
+            </div>
+            <div class="col-sm text-center">
+                Total average energy </br><h2 class="text-success">${energyAllBuild} Mw</h2>
+            </div>
+        </div>
+        <hr>
     </div>
+
+
 </div>

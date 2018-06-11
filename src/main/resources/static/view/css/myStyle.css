@@ -13,7 +13,49 @@
     font-size: 21px;
 }
 
-h1 {
-    color: navy;
-    margin-left: 20px;
+.margin-top{
+    margin-top: 15px;
+}
+
+.margin-right15 {
+    margin-right: 15px !important;
+}
+
+.margin-top-bot{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.menu-fixed{
+    position : fixed;
+}
+
+.center-vertical{
+    margin-top: 35vh;
+    transform: translateY(-50%);
+}
+
+.right-position{
+    position: absolute;
+    right: 30px;
+}
+.width-100{
+    width: 100%;
+}
+
+.test_div:last-child{
+    border-left: black 1px solid;
+}
+
+.input-group input {
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.card {
+    margin: auto;
+}
+
+button.btn{
+    height: 37px; !important;
 }

@@ -11,6 +11,9 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
         componentKeys: options.component.key
     }).then(function (arg) {
         divToInsert = options.el;
+        divToInsert.setAttribute('class', 'bootstrap-iso');
+
+        establishDesign();
 
         searchAllSomething("build_name").done(function (response) {
             var fields = [];
@@ -19,10 +22,10 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
                 fields.push(field._source.build_name);
             });
             if (fields.length === 0) {
-                divToInsert.textContent = "Aucune données n'est actuellement présente sur votre base...";
+                divToInsert.textContent = "Aucune données n'est actuellement présente sur votre base "+ES_URL;
             } else {
-                actual_select_list = initSelectList(fields, LIST_COMMIT_NAME);
-                dataFromField(fields[0]);
+                mapSelectList(fields, LIST_COMMIT_NAME, "choose your build name", "dataFromField(this.options[this.selectedIndex].value)", fields[fields.length-1]);
+                dataFromField(fields[fields.length-1]);
             }
         });
     });
@@ -33,8 +36,12 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
 
 const LIST_COMMIT_NAME = "build_name";
 var divToInsert;
+var divForInsertingTest;
+var divForInsertingMenu;
+var divForChart;
 var actual_select_list;
 var actual_powerapi_data;
+var actual_filter;
 
 /* Constant des autres fichiers */
 const URL_LOADED_JS_FILE = [
@@ -66,6 +73,9 @@ var loadD3JS = function () {
 
 /* Constant des autres fichiers */
 const URL_LOADED_CSS_FILE = [
+    //"https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
+    //"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
+    "/static/powerapiCI/dependency/bootstrap-iso/bootstrap4less.css",
     "https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css",
     "/static/powerapiCI/view/css/myStyle.css",
     "/static/powerapiCI/view/css/boxPlot.css"];
@@ -81,13 +91,15 @@ var loadAllCss = function () {
 };
 
 const URL_LOADED_HTML_FILE = [
+    "/static/powerapiCI/view/html/selectList.html",
     "/static/powerapiCI/view/html/detailsTests.html",
     "/static/powerapiCI/view/html/header.html"
 ];
 
 /**
- * [0] : detailsTests.html
- * [1] : header.html
+ * [0] : selectList
+ * [1] : detailsTests.html
+ * [2] : header.html
  * @type {Array}
  */
 var HTML_FILE = [];
