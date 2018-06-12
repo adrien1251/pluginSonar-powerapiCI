@@ -1,5 +1,6 @@
 window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
     //Clear l'affichage
+    projectName = options.component.key.substring(options.component.key.indexOf(':')+1);
     options.el.textContent = '';
     loadAllHTML();
     loadAllCss();
@@ -42,6 +43,7 @@ var divForChart;
 var actual_select_list;
 var actual_powerapi_data;
 var actual_filter;
+var projectName;
 
 /* Constant des autres fichiers */
 const URL_LOADED_JS_FILE = [
@@ -93,13 +95,15 @@ var loadAllCss = function () {
 const URL_LOADED_HTML_FILE = [
     "/static/powerapiCI/view/html/selectList.html",
     "/static/powerapiCI/view/html/detailsTests.html",
-    "/static/powerapiCI/view/html/header.html"
+    "/static/powerapiCI/view/html/header.html",
+    "/static/powerapiCI/view/html/detailClass.html"
 ];
 
 /**
  * [0] : selectList
  * [1] : detailsTests.html
  * [2] : header.html
+ * [3] : detail class
  * @type {Array}
  */
 var HTML_FILE = [];

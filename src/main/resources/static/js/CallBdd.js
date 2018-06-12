@@ -23,7 +23,15 @@ var esCall = function (dataForSearch) {
 var searchAllSomething = function (fieldName) {
     var data = {
         "query": {
-            "match_all": {}
+            "bool": {
+                "must": [
+                    {
+                        "term": {
+                            app_name: projectName
+                        }
+                    }
+                ]
+            }
         },
         "_source": [fieldName]
     };
@@ -41,7 +49,16 @@ var dataFromField = function (build_name) {
         "query": {
             "bool": {
                 "must": [
-                    {"match": {build_name: build_name}}
+                    {
+                        "term": {
+                            app_name: projectName
+                        }
+                    },
+                    {
+                        "term": {
+                            build_name: build_name
+                        }
+                    }
                 ]
             }
         }
@@ -77,36 +94,48 @@ var energyFromPreviousBuild = function (build_name, test, div) {
         "query": {
             "bool": {
                 "must": [
-                    {"match": {build_name: ""+previous_build_name}}
+                    {
+                        "term": {
+                            app_name: "spring-boot-rest-example"
+                        }
+                    },
+                    {
+                        "term": {
+                            build_name: "" + previous_build_name
+                        }
+                    }
                 ]
             }
         }
     };
 
     esCall(data).done(function (response) {
-        if(response.hits.hits.length == 0){
+        if (response.hits.hits.length == 0) {
             div.setAttribute('class', 'oi oi-media-record');
         }
-        else{
+        else {
             var previousEnergy = 0;
-            var methods =  response.hits.hits[0]._source.methods;
+            var classes = response.hits.hits[0]._source.classes;
 
-            methods.forEach(function(method){
-                if(method.name === test.name){
-                    previousEnergy = method.energy;
-                }
-            })
+            classes.forEach(function (classe) {
+                classe.methods.forEach(function (method) {
+                    if (method.name === test.name) {
+                        previousEnergy = method.energy;
+                    }
+                });
+            });
+
 
             var arrow = '';
             var testEnergySup = previousEnergy * 1.1;
             var testEnergyInf = previousEnergy * 0.9;
-            if(test.energy < testEnergySup && test.energy > testEnergyInf){
+            if (test.energy < testEnergySup && test.energy > testEnergyInf) {
                 arrow = 'oi oi-arrow-thick-right';
             }
-            else if(test.energy > testEnergySup){
+            else if (test.energy > testEnergySup) {
                 arrow = 'oi oi-arrow-thick-top';
             }
-            else if(test.energy < testEnergyInf){
+            else if (test.energy < testEnergyInf) {
                 arrow = 'oi oi-arrow-thick-bottom';
             }
             div.setAttribute('class', arrow);

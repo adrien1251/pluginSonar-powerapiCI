@@ -6,6 +6,10 @@
     background-color:#3b8ebf57;
 }
 
+.clear-both {
+    clear: both;
+}
+
 .testName{
     display: inline;
     vertical-align: middle;

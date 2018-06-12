@@ -44,7 +44,7 @@ var mapHeader = function(powerapiData){
     hashMap['commitName'] = powerapiData.commit_name;
     hashMap['executionDuration'] = powerapiData.duration;
     hashMap['energyAllBuild'] = Number.parseFloat(powerapiData.energy).toPrecision(4);
-    hashMap['numberOfTests'] = powerapiData.methods.length;
+    hashMap['numberOfClass'] = powerapiData.classes.length;
     hashMap['url_build'] = powerapiData.build_url;
 
     var toHtml = document.createElement('div');
@@ -65,4 +65,17 @@ var mapSelectList = function(list, nameList, labelName, onChange, selectedValue)
     toHtml.innerHTML = mapFile(HTML_FILE[0], hashMap);
     actual_select_list = toHtml;
     divForInsertingMenu.appendChild(toHtml);
+};
+
+var mapDetailClass = function(classe){
+    var hashMap = {};
+    hashMap['className'] = classe.name;
+    hashMap['numberOfTest'] = classe.methods.length;
+    hashMap['energy'] = Number.parseFloat(classe.energy).toPrecision(4);;
+
+    var toHtml = document.createElement('div');
+    toHtml.setAttribute('class', 'margin-top-bot text-center');
+    toHtml.innerHTML = mapFile(HTML_FILE[3], hashMap);
+
+    return toHtml;
 };

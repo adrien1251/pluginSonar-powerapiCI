@@ -63,52 +63,66 @@ var printPowerapiCIData = function (powerapiData) {
         var dataBubble = [];
         var cpt = 0;
 
-        var divDesign = document.createElement('div');
-        divDesign.setAttribute('class', 'row');
+        powerapiData.classes.forEach(function(classe){
+            var divClass = mapDetailClass(classe);
+            var enveloppingDiv = document.createElement('div');
+            enveloppingDiv.style.display = 'none';
+            enveloppingDiv.setAttribute('role', 'hidden');
+            enveloppingDiv.setAttribute('class', 'clear-both');
 
-        powerapiData.methods.forEach(function (test) {
-            if (actual_filter === undefined || test.name.match(actual_filter)) {
-                var bubble = [];
+            var divDesign = document.createElement('div');
+            divDesign.setAttribute('class', 'row');
 
-                if(cpt%2 === 0 && cpt != 0){
-                    divForInsertingTest.appendChild(divDesign);
-                    divDesign = document.createElement('div');
-                    divDesign.setAttribute('class', 'row');
+            classe.methods.forEach(function (test) {
+                if (actual_filter === undefined || test.name.match(actual_filter)) {
+                    var bubble = [];
+
+                    if(cpt%2 === 0 && cpt !== 0){
+                        enveloppingDiv.appendChild(divDesign);
+                        divDesign = document.createElement('div');
+                        divDesign.setAttribute('class', 'row');
+                    }
+
+                    mapDetailTest(test, powerapiData.build_name, divDesign);
+
+                    labels.push(test.name);
+                    data.push(test.energy);
+
+                    test.iterations.forEach(function(it){
+                        bubble.push({x:(it.time_end-it.time_begin), y:it.energy, r:10});
+                    });
+
+                    dataBubble.push(bubble);
+                    cpt++;
                 }
-                mapDetailTest(test, powerapiData.build_name, divDesign);
+            });
 
-                labels.push(test.name);
-                data.push(test.energy);
-
-                test.iterations.forEach(function(it){
-                    bubble.push({x:(it.time_end-it.time_begin), y:it.energy, r:10});
-                });
-
-                dataBubble.push(bubble);
-                cpt++;
-            }
+            enveloppingDiv.appendChild(divDesign);
+            divClass.appendChild(enveloppingDiv);
+            divForInsertingTest.appendChild(divClass);
         });
-        /* for the last div */
-        divForInsertingTest.appendChild(divDesign);
-
+/*
         var canvas = document.createElement("canvas");
         createGraph(canvas, "bar", createDataForGraph(labels, data));
         divForChart.appendChild(canvas);
-
+*/
         var canvas1 = document.createElement("canvas");
         createGraph(canvas1, "bubble", createDataForBubbleGraph(labels, dataBubble));
         divForChart.appendChild(canvas1);
+
+        var canvas2 = document.createElement("canvas");
+        createGraph(canvas2, "bubble", fillDataForTestSuiteGraph(powerapiData.classes));
+        divForChart.appendChild(canvas2);
     }
 };
 
 
 var changeVisibility = function (div) {
-
     div = div.nextSibling;
-    while (div.className === undefined) {
+    while (div.className === undefined || div.getAttribute('role') !== "hidden") {
         div = div.nextSibling;
     }
-    if (div.style.display == 'none') {
+    if (div.style.display === 'none') {
         div.style.display = 'block';
     } else {
         div.style.display = 'none';
