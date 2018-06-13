@@ -42,8 +42,8 @@ var fillDataForTestSuiteGraph = function (classes) {
                 var o = method.iterations.find(function (it) {
                     return it.n === i;
                 });
-                obj.energy = o.energy;
-                obj.duration = o.time_end - o.time_begin;
+                obj.energy += o.energy;
+                obj.duration += o.time_end - o.time_begin;
             });
             bubble.push({x:obj.duration, y:obj.energy, r: 10});
         }

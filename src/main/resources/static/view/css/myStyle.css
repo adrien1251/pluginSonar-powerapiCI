@@ -10,6 +10,17 @@
     clear: both;
 }
 
+.card-width {
+    width: 15rem;
+}
+
+.margin-left {
+    margin-left: 20px;
+}
+
+.padding-left {
+    padding-left: 40px;
+}
 .testName{
     display: inline;
     vertical-align: middle;

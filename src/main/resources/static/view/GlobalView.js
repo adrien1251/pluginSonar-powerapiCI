@@ -3,13 +3,13 @@ var establishDesign = function(){
     globalDiv.setAttribute('class', 'row');
 
     divForInsertingMenu = document.createElement("div");
-    divForInsertingMenu.setAttribute('class', 'menu-fixed col-3');
+    divForInsertingMenu.setAttribute('class', 'menu-fixed col-3 margin-left');
 
     var rightDiv = document.createElement("div");
     rightDiv.setAttribute('class', 'col-9');
 
     divForInsertingTest = document.createElement("div");
-    divForInsertingTest.setAttribute('class', 'margin-top');
+    divForInsertingTest.setAttribute('class', 'margin-top padding-left');
 
     divForChart = document.createElement("div");
     divForChart.setAttribute('class', 'margin-top');
@@ -51,7 +51,7 @@ var setFilter = function(powerapiData, filter){
 
 var printPowerapiCIData = function (powerapiData) {
     divForInsertingTest.textContent = '';
-
+    divForChart.textContent = '';
     if (powerapiData === null) {
         divForInsertingTest.textContent += "Aucune donnée n'est disponible pour votre selection actuel";
     } else {

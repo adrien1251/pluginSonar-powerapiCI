@@ -80,8 +80,8 @@ function getPreviousBuildName(build_name) {
             tmpList.push(list[i].value);
         }
     }
-    var previous_build_name = Math.max.apply(Math, tmpList);
-    return previous_build_name;
+
+    return Math.max.apply(Math, tmpList);
 }
 
 /**
