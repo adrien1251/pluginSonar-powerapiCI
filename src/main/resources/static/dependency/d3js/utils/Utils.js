@@ -1,3 +1,10 @@
+/**
+ * File to create boxPlot d3JS chart.
+ * @param jsonData : show documentation to put great json
+ * @param insert_div: div to insert the chart
+ * @param width_cons: width of the chart, your width screen by default
+ * @param height_cons: height of the chart, your height screen by default
+ */
 var createBoxPlot = function(jsonData, insert_div, width_cons, height_cons) {
     var labels = true; // show the text labels beside individual boxplots?
 
@@ -97,8 +104,12 @@ function iqr(k) {
     };
 };
 
-
-var remplirJSonForD3JS = function(test){
+/**
+ * fill json for boxPlot
+ * @param test: the test you need to get boxPlot chart
+ * @return {Array} the json
+ */
+var fillJSonForD3JS = function(test){
     var json = [];
     var nbIterations = test.iterations.length;
     for(var i=0; i<nbIterations; i++){

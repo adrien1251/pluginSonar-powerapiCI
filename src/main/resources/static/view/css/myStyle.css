@@ -1,9 +1,9 @@
-.cardContent{
-    width:18rem;
-    display:inline-grid;
-    verticalAlign:middle;
-    margin:10px 10px 10px 10px;
-    background-color:#3b8ebf57;
+.cardContent {
+    width: 18rem;
+    display: inline-grid;
+    verticalAlign: middle;
+    margin: 10px 10px 10px 10px;
+    background-color: #3b8ebf57;
 }
 
 .clear-both {
@@ -21,14 +21,15 @@
 .padding-left {
     padding-left: 40px;
 }
-.testName{
+
+.testName {
     display: inline;
     vertical-align: middle;
     margin: 10px;
     font-size: 21px;
 }
 
-.margin-top{
+.margin-top {
     margin-top: 15px;
 }
 
@@ -36,30 +37,35 @@
     margin-right: 15px !important;
 }
 
-.margin-top-bot{
+.margin-top-bot {
     margin-top: 30px;
     margin-bottom: 30px;
 }
 
-.menu-fixed{
-    position : fixed;
+.menu-fixed {
+    position: fixed;
 }
 
-.center-vertical{
+.center-vertical {
     margin-top: 35vh;
     transform: translateY(-50%);
 }
 
-.right-position{
+.right-position {
     position: absolute;
     right: 30px;
 }
-.width-100{
+
+.width-100 {
     width: 100%;
 }
 
-.test_div:last-child{
-    border-left: black 1px solid;
+.test_div:first-child {
+    border-right: black 1px solid;
+}
+
+.positionArrowHeader {
+    right: 20%;
 }
 
 .input-group input {
@@ -71,6 +77,7 @@
     margin: auto;
 }
 
-button.btn{
-    height: 37px; !important;
+button.btn {
+    height: 37px;
+!important;
 }

@@ -2826,6 +2826,7 @@ a > .bootstrap-iso code {
   flex: 1 1 auto;
   width: 1%;
   margin-bottom: 0;
+  height: auto;
 }
 .bootstrap-iso .input-group > .form-control:focus,
 .bootstrap-iso .input-group > .custom-select:focus,

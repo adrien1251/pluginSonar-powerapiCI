@@ -1,3 +1,9 @@
+/**
+ * Map HTML file with hashMap data
+ * @param htmlFile
+ * @param hashMap
+ * @return {*} the map html file
+ */
 var mapFile = function (htmlFile, hashMap) {
     var html = htmlFile;
     var index = html.indexOf("${");
@@ -15,6 +21,13 @@ var mapFile = function (htmlFile, hashMap) {
     return html;
 };
 
+/**
+ * Map detail test html
+ * @param test the test you need to transform in html
+ * @param buildName build name of the test
+ * @param divInsert the div you need to insert the test
+ * @return {Element} the arrow span to put arrow after that
+ */
 var mapDetailTest = function(test, buildName, divInsert){
     var hashMap = {};
     hashMap['testName'] = test.name;
@@ -24,17 +37,19 @@ var mapDetailTest = function(test, buildName, divInsert){
 
     var toHtml = document.createElement('div');
     toHtml.setAttribute('class', 'col-6 test_div');
-    toHtml.innerHTML = mapFile(HTML_FILE[1], hashMap);
+    toHtml.innerHTML = mapFile(HTML_FILE["detailTest"], hashMap);
 
-    createBoxPlot(remplirJSonForD3JS(test), toHtml.getElementsByClassName('canvas_boxplot')[0], 300, 350);
-    arrowDirection(buildName, test, toHtml.getElementsByClassName('arrow')[0]);
+    createBoxPlot(fillJSonForD3JS(test), toHtml.getElementsByClassName('canvas_boxplot')[0], 300, 350);
     divInsert.appendChild(toHtml);
+
+    return toHtml.getElementsByClassName('arrow')[0];
 };
 
-const arrowDirection = function(buildName, test, div){
-    energyFromPreviousBuild(buildName, test, div);
-};
-
+/**
+ * map the header html
+ * @param powerapiData the powerapiData to print in html
+ * @return {Element} the span arrow to put arrow inside
+ */
 var mapHeader = function(powerapiData){
     var hashMap = {};
     hashMap['url_project'] = powerapiData.scm_url;
@@ -48,10 +63,20 @@ var mapHeader = function(powerapiData){
     hashMap['url_build'] = powerapiData.build_url;
 
     var toHtml = document.createElement('div');
-    toHtml.innerHTML = mapFile(HTML_FILE[2], hashMap);
+    toHtml.innerHTML = mapFile(HTML_FILE["header"], hashMap);
     divForInsertingTest.appendChild(toHtml);
+
+    return toHtml.getElementsByClassName('arrow')[0];
 };
 
+/**
+ * map the select list html
+ * @param list the list to put inside
+ * @param nameList
+ * @param labelName
+ * @param onChange string function to execute when we change the list
+ * @param selectedValue actual value to print in first
+ */
 var mapSelectList = function(list, nameList, labelName, onChange, selectedValue){
     var hashMap = {};
     hashMap['nameList'] = nameList;
@@ -62,20 +87,27 @@ var mapSelectList = function(list, nameList, labelName, onChange, selectedValue)
 
     var toHtml = document.createElement('div');
     toHtml.setAttribute('class', 'center-vertical');
-    toHtml.innerHTML = mapFile(HTML_FILE[0], hashMap);
+    toHtml.innerHTML = mapFile(HTML_FILE["selectList"], hashMap);
     actual_select_list = toHtml;
     divForInsertingMenu.appendChild(toHtml);
 };
 
-var mapDetailClass = function(classe){
+/**
+ * map detail class HTML
+ * @param classe
+ * @param energy
+ * @param nbTest
+ * @return {HTMLDivElement} the text to insert color inside
+ */
+var mapDetailClass = function(classe, energy, nbTest){
     var hashMap = {};
     hashMap['className'] = classe.name;
-    hashMap['numberOfTest'] = classe.methods.length;
-    hashMap['energy'] = Number.parseFloat(classe.energy).toPrecision(4);;
+    hashMap['numberOfTest'] = nbTest;
+    hashMap['energy'] = Number.parseFloat(energy).toPrecision(4);
 
     var toHtml = document.createElement('div');
     toHtml.setAttribute('class', 'margin-top-bot text-center');
-    toHtml.innerHTML = mapFile(HTML_FILE[3], hashMap);
+    toHtml.innerHTML = mapFile(HTML_FILE["detailClass"], hashMap);
 
     return toHtml;
 };

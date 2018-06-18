@@ -1,3 +1,6 @@
+/**
+ * File to create boxPlot d3JS chart.
+ */
 (function() {
 
 // Inspired by http://informationandvisualization.de/blog/box-plot
@@ -12,16 +15,9 @@ d3.box = function() {
 	  showLabels = true, // whether or not to show text labels
       tickFormat = null;
 
-  // For each small multiple…
   function box(g) {
     g.each(function(data, i) {
-      //d = d.map(value).sort(d3.ascending);
-	  //var boxIndex = data[0];
-	  //var boxIndex = 1;
 	  var d = data[1].sort(d3.ascending);
-	  
-	 // console.log(boxIndex); 
-	  //console.log(d); 
 	  
       var g = d3.select(this),
           n = d.length,

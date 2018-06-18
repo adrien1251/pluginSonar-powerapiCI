@@ -25,8 +25,13 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
             if (fields.length === 0) {
                 divToInsert.textContent = "Aucune données n'est actuellement présente sur votre base "+ES_URL;
             } else {
-                mapSelectList(fields, LIST_COMMIT_NAME, "choose your build name", "dataFromField(this.options[this.selectedIndex].value)", fields[fields.length-1]);
-                dataFromField(fields[fields.length-1]);
+                fields.sort(function(a, b){
+                    if(parseInt(a) < parseInt(b)) return 1;
+                    if(parseInt(a) > parseInt(b)) return -1;
+                    return 0
+                });
+                mapSelectList(fields, LIST_COMMIT_NAME, "choose your build name", "dataFromField(this.options[this.selectedIndex].value)", fields[0]);
+                dataFromField(fields[0]);
             }
         });
     });
@@ -100,20 +105,28 @@ const URL_LOADED_HTML_FILE = [
 ];
 
 /**
- * [0] : selectList
- * [1] : detailsTests.html
- * [2] : header.html
- * [3] : detail class
- * @type {Array}
+ * [selectList]
+ * [detailsTests]
+ * [header]
+ * [detailClass]
  */
 var HTML_FILE = [];
 
 var loadAllHTML = function(){
     URL_LOADED_HTML_FILE.forEach(function(htmlFile){
         jQuery.get(htmlFile, undefined, function(data) {
-            HTML_FILE.push(data);
+            var name = data.split('\n', 1)[0];
+            //name.substring(0, name.length-1) : cause meta charactere
+            HTML_FILE[name.substring(0, name.length-1)] = data.substring(name.length+1);
         });
     });
 };
 
-/* D3 JS */
+/**
+ * For user press Enter and run filter
+ **/
+function runScript(e) {
+    if (e.keyCode === 13) {
+        setFilter(actual_powerapi_data, document.getElementById("filter").value)
+    }
+}

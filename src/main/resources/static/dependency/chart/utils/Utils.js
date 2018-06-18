@@ -1,3 +1,7 @@
+/**
+ * Create random RGBA string color
+ * @return String rgba color
+ */
 var randomColor = function () {
     return "rgba(" + Math.floor(Math.random() * Math.floor(256)) + "," +
         "" + Math.floor(Math.random() * Math.floor(256)) + ", " +
@@ -5,21 +9,11 @@ var randomColor = function () {
 };
 
 /**
- * Create data for feed graph
- * @param labels : title of data
- * @param data : data to print
- * @return {{labels: *, datasets: *[]}}
+ * Create data for feed bubble chart
+ * @param labels: table with label of data
+ * @param data: table with many data
+ * @return {{}} data to create chartJS chart
  */
-var createDataForGraph = function (labels, data) {
-    return {
-        labels: labels,
-        datasets: [{
-            label: 'Energie par test',
-            data: data
-        }]
-    }
-};
-
 var createDataForBubbleGraph = function (labels, data) {
     var dataReturn = {};
     dataReturn.datasets = [];
@@ -29,6 +23,11 @@ var createDataForBubbleGraph = function (labels, data) {
     return dataReturn;
 };
 
+/**
+ * Create data for specific chart
+ * @param classes: all the data to put inside chart
+ * @return {{}} data to create chartJS chart
+ */
 var fillDataForTestSuiteGraph = function (classes) {
     var labels = [];
     var data = [];
@@ -58,7 +57,7 @@ var fillDataForTestSuiteGraph = function (classes) {
  * Create graph and display it into canvas
  * @param canvas : display the graph into it
  * @param type : Line, Bar, Radar, Bubble, Area, Mixed..
- * @param data : data create by "createDataForGraph"
+ * @param data : data (saw the chartJS documentation or use "createDataForBubbleGraph" to put true data
  */
 var createGraph = function (canvas, type, data) {
     new Chart(canvas, {

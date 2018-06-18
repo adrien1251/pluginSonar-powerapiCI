@@ -1,3 +1,4 @@
+selectList
 <label for="${nameList}" class="text-center width-100">${labelName}</label>
 <select name="${nameList}" class="form-control" onchange="${onChange}">
     ${optionList}
@@ -5,7 +6,7 @@
 
 <div class="input-group margin-top-bot">
     <label for="filter" class="text-center width-100">Do you want search test :</label>
-    <input name="search" type="text" class="form-control" id="filter" placeholder="Filter can be regular expression">
+    <input name="search" type="text" class="form-control" id="filter" onkeypress="return runScript(event)" placeholder="Filter can be regular expression">
     <span class="input-group-btn">
         <button class="btn btn-default" type="button" onclick='setFilter(actual_powerapi_data, document.getElementById("filter").value)'>Go !</button>
     </span>

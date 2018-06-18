@@ -1,3 +1,9 @@
+/**
+ * Add the principal div to the  HTML
+ * the divForInsertingMenu
+ * the divForInsertingTest
+ * the divForChart
+ */
 var establishDesign = function(){
     var globalDiv = document.createElement('div');
     globalDiv.setAttribute('class', 'row');
@@ -27,7 +33,12 @@ var establishDesign = function(){
     divToInsert.appendChild(globalDiv);
 };
 
-
+/**
+ * Create the list to select build
+ * @param list : table with different name
+ * @param selectedValue : actual value need to be selected
+ * @return {string} html list
+ */
 var generateOptionList = function(list, selectedValue){
     var optionList = "";
     var option;
@@ -44,18 +55,28 @@ var generateOptionList = function(list, selectedValue){
     return optionList;
 };
 
+/**
+ * Set a filter to get less than all test and reprint data with actual filter
+ * @param powerapiData : powerAPI data to find new data
+ * @param filter the new filtre
+ */
 var setFilter = function(powerapiData, filter){
   actual_filter = filter;
   printPowerapiCIData(powerapiData);
 };
 
+/**
+ * Print the all screen with data powerapiData
+ * @param powerapiData data you need to print
+ */
 var printPowerapiCIData = function (powerapiData) {
     divForInsertingTest.textContent = '';
     divForChart.textContent = '';
     if (powerapiData === null) {
         divForInsertingTest.textContent += "Aucune donnée n'est disponible pour votre selection actuel";
     } else {
-        mapHeader(powerapiData);
+        var tendencyMap = {};
+        tendencyMap['totalEnergy'] = {divToFill: mapHeader(powerapiData), energy: powerapiData.energy};
 
         var labels = [];
         var data = [];
@@ -63,8 +84,11 @@ var printPowerapiCIData = function (powerapiData) {
         var dataBubble = [];
         var cpt = 0;
 
+
         powerapiData.classes.forEach(function(classe){
-            var divClass = mapDetailClass(classe);
+            var energy = 0;
+            var nbTest = 0;
+
             var enveloppingDiv = document.createElement('div');
             enveloppingDiv.style.display = 'none';
             enveloppingDiv.setAttribute('role', 'hidden');
@@ -83,10 +107,13 @@ var printPowerapiCIData = function (powerapiData) {
                         divDesign.setAttribute('class', 'row');
                     }
 
-                    mapDetailTest(test, powerapiData.build_name, divDesign);
+                    tendencyMap[test.name] = {divToFill: mapDetailTest(test, powerapiData.build_name, divDesign), energy: test.energy};
 
                     labels.push(test.name);
                     data.push(test.energy);
+
+                    energy += test.energy;
+                    nbTest++;
 
                     test.iterations.forEach(function(it){
                         bubble.push({x:(it.time_end-it.time_begin), y:it.energy, r:10});
@@ -98,9 +125,15 @@ var printPowerapiCIData = function (powerapiData) {
             });
 
             enveloppingDiv.appendChild(divDesign);
-            divClass.appendChild(enveloppingDiv);
-            divForInsertingTest.appendChild(divClass);
+            if(enveloppingDiv.textContent !== '') {
+                var divClass = mapDetailClass(classe, energy, nbTest);
+                tendencyMap[classe.name] = {divToFill: divClass.getElementsByClassName('colorEnergy')[0], energy: energy};
+                divClass.appendChild(enveloppingDiv);
+                divForInsertingTest.appendChild(divClass);
+            }
         });
+
+        fillTendency(powerapiData.build_name, tendencyMap);
 /*
         var canvas = document.createElement("canvas");
         createGraph(canvas, "bar", createDataForGraph(labels, data));
@@ -116,7 +149,10 @@ var printPowerapiCIData = function (powerapiData) {
     }
 };
 
-
+/**
+ * Change the visibility to the next div with attribute 'role'
+ * @param div, the div we need to hide brother.
+ */
 var changeVisibility = function (div) {
     div = div.nextSibling;
     while (div.className === undefined || div.getAttribute('role') !== "hidden") {
