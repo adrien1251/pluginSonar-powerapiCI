@@ -11,6 +11,3 @@ Ce projet est un plugin sonar pour afficher l'énergie de votre projet avec un h
 # Utilisation
 
 Il faut tout d'abord scanner votre projet avec maven et le plugin **[powerapi maven plugin](https://github.com/adrien1251/powerapiMavenPlugin)** pour ensuite vous rendre dans votre projet sur sonar, puis consulter la page powerapi stat. 
-
-# Quelques images 
-
