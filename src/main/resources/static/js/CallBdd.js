@@ -27,7 +27,7 @@ var esCall = function (dataForSearch) {
 
 /**
  * Search all field on the elasticsearch index with project name project
- * @param fieldName it's the column you need
+ * @param fieldName it's the column you need in table
  * @returns {*} ajax request, you can do more with .done()
  */
 var searchAllSomething = function (fieldName) {
@@ -43,7 +43,7 @@ var searchAllSomething = function (fieldName) {
                 ]
             }
         },
-        "_source": [fieldName]
+        "_source": fieldName
     };
 
     return esCall(data);
@@ -75,7 +75,6 @@ var dataFromField = function (buildName) {
     };
 
     esCall(data).done(function (response) {
-        actual_select_list = document.getElementById(actual_select_list.getAttribute('id')) || actual_select_list;
         printPowerapiCIData(response.hits.hits[0]._source);
         actual_powerapi_data = response.hits.hits[0]._source;
     });
@@ -83,33 +82,29 @@ var dataFromField = function (buildName) {
 
 /**
  * Get the previous build name
- * @param build_name: the build name you need to search another
+ * @param actualTimetamps: the timestamp you need to search previous
  * @return {String} the previous build name
  */
-function getPreviousBuildName(build_name) {
-    //TODO: Refaire entierement la recherche de l'ancien build (part timestamp et non pas par numéro,
-    //TODO: peut être le sauvegarder au moment du print actual.
-
-    var list = actual_select_list.getElementsByTagName('select')[0].options;
-    var tmpList = [];
-    for (var i = 0; i < list.length; i++) {
-        if (list[i].value < build_name) {
-            tmpList.push(list[i].value);
+function getPreviousBuildName(actualTimetamps) {
+    var returnBuild = {build_name: "", timestamp:0};
+    all_build_timestamp.forEach(function(build){
+        if(build.timestamp < actualTimetamps && build.timestamp > returnBuild.timestamp){
+            returnBuild = build;
         }
-    }
+    });
 
-    return "" + Math.max.apply(Math, tmpList);
+    return returnBuild.build_name;
 }
 
 const UPPER_ENERGY = 1.1;
 const LOWER_ENERGY = 0.9;
 /**
  * Fill div into the hashmap for saw the tendency.
- * @param actualBuildName : actual build name
+ * @param actualBuildTimestamp : timestamp you need to search previous
  * @param hashMap : [testName] = {divToFill, energy}
  */
-var fillTendency = function (actualBuildName, hashMap) {
-    var previous_build_name = getPreviousBuildName(actualBuildName);
+var fillTendency = function (actualBuildTimestamp, hashMap) {
+    var previous_build_name = getPreviousBuildName(actualBuildTimestamp);
     var data = {
         "query": {
             "bool": {
@@ -166,7 +161,7 @@ var fillTendency = function (actualBuildName, hashMap) {
  * @return {string} GREEN if the energy is good tendency, RED else
  */
 var getColor = function (previousEnergy, actualEnergy) {
-    return actualEnergy > previousEnergy * UPPER_ENERGY ? "red" : actualEnergy > previousEnergy * UPPER_ENERGY ? "#2ae12a" : "";
+    return actualEnergy > previousEnergy * UPPER_ENERGY ? "red" : actualEnergy < previousEnergy * LOWER_ENERGY ? "#2ae12a" : "";
 };
 
 /**
@@ -177,5 +172,5 @@ var getColor = function (previousEnergy, actualEnergy) {
  */
 var findArrow = function (previousEnergy, actualEnergy) {
     return actualEnergy > previousEnergy * UPPER_ENERGY ? 'oi oi-arrow-thick-top' :
-        actualEnergy > previousEnergy * UPPER_ENERGY ? 'oi oi-arrow-thick-bottom' : 'oi oi-arrow-thick-right';
+        actualEnergy < previousEnergy * LOWER_ENERGY ? 'oi oi-arrow-thick-bottom' : 'oi oi-arrow-thick-right';
 };

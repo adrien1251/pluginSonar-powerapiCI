@@ -16,11 +16,12 @@ window.registerExtension('powerapiCI/powerapiCI_page', function (options) {
 
         establishDesign();
 
-        searchAllSomething("build_name").done(function (response) {
+        searchAllSomething(["build_name", "timestamp"]).done(function (response) {
             var fields = [];
             var table_fields = response.hits.hits;
             table_fields.forEach(function (field) {
                 fields.push(field._source.build_name);
+                all_build_timestamp.push({build_name: field._source.build_name, timestamp: field._source.timestamp})
             });
             if (fields.length === 0) {
                 divToInsert.textContent = "Aucune données n'est actuellement présente sur votre base "+ES_URL;
@@ -45,7 +46,7 @@ var divToInsert;
 var divForInsertingTest;
 var divForInsertingMenu;
 var divForChart;
-var actual_select_list;
+var all_build_timestamp = [];
 var actual_powerapi_data;
 var actual_filter;
 var projectName;

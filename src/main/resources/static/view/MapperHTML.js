@@ -88,7 +88,6 @@ var mapSelectList = function(list, nameList, labelName, onChange, selectedValue)
     var toHtml = document.createElement('div');
     toHtml.setAttribute('class', 'center-vertical');
     toHtml.innerHTML = mapFile(HTML_FILE["selectList"], hashMap);
-    actual_select_list = toHtml;
     divForInsertingMenu.appendChild(toHtml);
 };
 

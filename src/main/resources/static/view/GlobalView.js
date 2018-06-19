@@ -133,7 +133,7 @@ var printPowerapiCIData = function (powerapiData) {
             }
         });
 
-        fillTendency(powerapiData.build_name, tendencyMap);
+        fillTendency(powerapiData.timestamp, tendencyMap);
 /*
         var canvas = document.createElement("canvas");
         createGraph(canvas, "bar", createDataForGraph(labels, data));
