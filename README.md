@@ -31,4 +31,4 @@ This project is a sonar plugin made to display the energy spent by your project 
 
 # Usage
 
-First of all, you have to scan your project with maven and the plugin ** [powerapi maven plugin] (https://github.com/adrien1251/powerapiMavenPlugin) ** then go to your project on sonar, then consult the page powerapi stat.
+First of all, you have to scan your project with maven and the plugin **[powerapi maven plugin] (https://github.com/adrien1251/powerapiMavenPlugin)** then go to your project on sonar, then consult the page powerapi stat.
