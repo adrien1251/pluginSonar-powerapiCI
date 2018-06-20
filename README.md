@@ -1,4 +1,4 @@
-FR
+# FR
 
 
 # Powerapi Sonar Plugin
@@ -17,7 +17,7 @@ Il faut tout d'abord scanner votre projet avec maven et le plugin **[powerapi ma
 
 
 
-EN
+# EN
 
 # Powerapi Sonar Plugin 
 
