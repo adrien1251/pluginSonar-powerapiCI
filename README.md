@@ -24,6 +24,11 @@ Ce projet a été développé dans le cadre d'une collaboration entre Romain Rou
 Adrien Deblock / Vincent Leclercq.
 Ce projet a fait office de mission afin de mener à bien notre stage de fin d'étude au sein de Davidson Consulting.
 
+## License
+
+Ce projet est sous la licence MIT - voir le fichier [LICENSE.md](LICENSE.md) pour tout détails
+
+------------------------------------------
 # EN
 
 # Powerapi Sonar Plugin 
@@ -49,4 +54,8 @@ This project was developed in the framework of a collaboration between Romain Ro
 
 Adrien Deblock / Vincent Leclercq.
 This project served as a mission to complete our end-of-study internship at Davidson Consulting.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
