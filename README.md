@@ -21,7 +21,7 @@ Ce projet a été développé dans le cadre d'une collaboration entre Romain Rou
 
 # Autheurs
 
-Adrien Deblock / Vincent Leclercq
+Adrien Deblock / Vincent Leclercq.
 Ce projet a fait office de mission afin de mener à bien notre stage de fin d'étude au sein de Davidson Consulting.
 
 # EN
@@ -47,6 +47,6 @@ This project was developed in the framework of a collaboration between Romain Ro
 
 # Authors
 
-Adrien Deblock / Vincent Leclercq
+Adrien Deblock / Vincent Leclercq.
 This project served as a mission to complete our end-of-study internship at Davidson Consulting.
 
